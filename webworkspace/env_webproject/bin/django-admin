@@ -1,4 +1,4 @@
-#!/home/ubuntu/techworkspace/env_webproject/bin/python3
+#!/home/ubuntu/webworkspace/env_webproject/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys
