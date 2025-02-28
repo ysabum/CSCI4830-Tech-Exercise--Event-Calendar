@@ -1,7 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponse
 
-def index(request):
-    return render(request, 'index_hello.html')
-
-def about(request):
-    return render(request, 'about_hello.html')
+def hello(request):
+    return HttpResponse('Hello, world!')
