@@ -1,8 +1,0 @@
-[Unit]
-Description=Python and Django
-
-[Socket]
-ListenStream=/run/gunicorn.sock
-
-[Install]
-WantedBy=sockets.target

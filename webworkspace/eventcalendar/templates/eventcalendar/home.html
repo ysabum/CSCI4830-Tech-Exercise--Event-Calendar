@@ -1,0 +1,19 @@
+<!--Notes:-->
+    <!--<br> Adds a new  line-->
+
+    {% extends 'eventcalendar/base.html' %}
+    {% block content %}
+
+    <center>
+        
+    <h1>Hello, {{ name }}!</h1>
+
+    As of {{ time }}<br/><br/> <!--Filter to convert the time into a readable format-->
+
+    {{ event_calendar|safe }} <!--Filter to convert HTML into an actual calendar-->
+    <br><br><br><br>
+    Copyright (c): {{ current_year }}
+
+    </center>
+
+{% endblock %}
