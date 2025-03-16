@@ -1,0 +1,39 @@
+<!--Notes:-->
+    <!--<br> Adds a new  line-->
+
+    {% extends 'eventcalendar/base.html' %}
+    {% block content %}
+
+<!--Title-->
+    <center><h1>Events</h1></center>
+
+<!--Add new event-->
+<!--Reference: https://getbootstrap.com/docs/5.0/components/card/-->
+    {% for event in event_list %}
+        <div class="card mb-3">
+            <img style="height: 150px;" src="https://images.unsplash.com/photo-1590272456521-1bbe160a18ce?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+            <div class="card-body">
+            <h5 class="card-title">{{ event.venue }}</h5>
+            <p class="card-text"><strong>Description: </strong>{{ event.description }}</p>
+            <p class="card-text"><small class="text-muted">
+                <strong>Date:</strong> {{ event.event_date }}<br/>
+                <strong>Attendees:</strong>
+            {% for user in event.attendees.all %} <!--Loop through all attendees, each on a new line-->
+                <li>{{ user }}</li>
+            {% endfor %}</li>
+                </small></p>
+            </div>
+        </div>
+    {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

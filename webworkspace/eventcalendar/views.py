@@ -1,20 +1,29 @@
 from django.shortcuts import render
+from django.contrib.auth.views import reverse_lazy 
+
 import calendar
 from calendar import HTMLCalendar
+
 from datetime import datetime
 import zoneinfo
+
+from .models import Event
+
+from django.contrib.auth.views import LoginView
+
+
+class CustomLoginView(LoginView):
+    template_name = 'eventcalendar/login.html' # Custom login template
+    redirect_authenticated_user = True # Redirect to home if user is authenticated
+    field = '__all__' # All fields are required for login
+
+    def get_success_url(self):
+        return reverse_lazy('home') # Redirect to home page after successful login
+
 
 def home(request, year: int=datetime.now().year, month: str=datetime.now().strftime('%B')):
     '''
     Function to render the home page with a calendar for the specified year and month.
-
-    Parameters:
-    request (HttpRequest): The HTTP request object.
-    year (int): The year for which the calendar is to be displayed.
-    month (str): The name of the month for which the calendar is to be displayed.
-
-    Output:
-    Renders the 'home.html' template with the calendar and other context variables.
     '''
 
     name = 'Henny'
@@ -42,4 +51,16 @@ def home(request, year: int=datetime.now().year, month: str=datetime.now().strft
         'event_calendar': event_calendar,
         'current_year': current_year,
         'time': time,
+    })
+
+
+def all_events(request):
+    '''
+    Function to render the page with all events.
+    '''
+
+    event_list = Event.objects.all() # Get all events from the database
+
+    return render(request, 'eventcalendar/event_list.html', 
+    {'event_list': event_list
     })
