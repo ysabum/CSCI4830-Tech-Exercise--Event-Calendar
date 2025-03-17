@@ -50,45 +50,72 @@ def logout_user(request):
 
 class CalendarView(LoginRequiredMixin, ListView):
     '''
-    Class-based view to render the home page. Home page contains the calendar for today's date.
+    Class-based view to render the home page.
+    Ensures users only see their own events.
     Requires user to be authenticated.
     '''
 
     model = Event
     template_name = 'eventcalendar/calendar.html'
 
-    def get_date(self, req_day):
-        if req_day:
-            year, month = (int(x) for x in req_day.split('-'))
-            return date(year, month, day = 1)
 
-        return datetime.today()
+    def get_date(self, req_day): # req_day = requested year and month
+        '''
+        Function to get the date.
+        '''
+
+        if req_day:
+            try:
+                year, month = (int(x) for x in req_day.split('-'))
+                return date(year, month, 1)
+
+            except ValueError:
+                pass  # In case of an invalid format, fallback to today
+    
+        return datetime.today().date()
+
 
     def previous_month(self, cal_day):
-        first = cal_day.replace(day = 1)
-        previous_month = first - timedelta(days = 1)
-        month = 'month=' + str(previous_month.year) + '-' + str(previous_month.month)
+        '''
+        Function to get the previous month.
+        '''
 
-        return month
+        first_day = cal_day.replace(day=1)
+        previous_month = first_day - timedelta(days = 1)
+
+        return f'month={previous_month.year}-{previous_month.month}'
+
 
     def next_month(self, cal_day):
-        days_in_month = calendar.monthrange(cal_day.year, cal_day.month)[1]
-        last = cal_day.replace(day = days_in_month)
-        next_month = last + timedelta(days = 1)
-        month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+        '''
+        Function to get the next month.
+        '''
 
-        return month
+        days_in_month = calendar.monthrange(cal_day.year, cal_day.month)[1]
+        last_day = cal_day.replace(day = days_in_month)
+        next_month = last_day + timedelta(days = 1)
+
+        return f'month={next_month.year}-{next_month.month}'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cal_day = self.get_date(self.request.GET.get('month', None))
 
+        # Fetch only the logged-in user's events
+        user_events = Event.objects.filter(
+            user = self.request.user,
+            start_time__year = cal_day.year,
+            start_time__month = cal_day.month
+        )
+
         event_calendar = Calendar(cal_day.year, cal_day.month)
-        html_calendar = event_calendar.formatmonth(withyear = True)
+        html_calendar = event_calendar.formatmonth(events = user_events, withyear = True)
 
         context['calendar'] = mark_safe(html_calendar)
-        context['prev_month'] = self.previous_month(cal_day)
+        context['previous_month'] = self.previous_month(cal_day)
         context['next_month'] = self.next_month(cal_day)
+        context['events'] = user_events  # Pass filtered events to the template
 
         return context
 
@@ -99,17 +126,35 @@ class EventCreateView(LoginRequiredMixin, CreateView):
     Requires user to be authenticated.
     '''
 
-    def get(self, request, event_id = None):
-        instance = Event()
-        if event_id:
-            instance = get_object_or_404(Event, pk = event_id)
-        else:
-            instance = Event()
+    model = Event
+    form_class = EventForm
+    template_name = 'eventcalendar/event.html'
+    success_url = reverse_lazy('calendar')
 
-        form = EventForm(request.POST or None, instance=instance)
 
-        if request.POST and form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('eventcalendar:calendar'))
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(EventCreateView, self).form_valid(form)
 
-        return render(request, 'eventcalendar/event.html', {'form': form})
+
+class EventUpdateView(LoginRequiredMixin, UpdateView):
+    '''
+    Class-based view to update an existing event.
+    Requires user to be authenticated.
+    '''
+
+    model = Event
+    form_class = EventForm
+    template_name = 'eventcalendar/event.html'
+    success_url = reverse_lazy('calendar')
+
+
+class EventDeleteView(LoginRequiredMixin, DeleteView):
+    '''
+    Class-based view to delete an existing event.
+    Requires user to be authenticated.
+    '''
+
+    model = Event
+    template_name = 'eventcalendar/delete.html'
+    success_url = reverse_lazy('calendar')

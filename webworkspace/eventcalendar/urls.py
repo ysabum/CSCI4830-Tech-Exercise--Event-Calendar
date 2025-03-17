@@ -5,5 +5,6 @@ urlpatterns = [
     path('login/', views.CustomLoginView.as_view(), name='login'),
     path('', views.CalendarView.as_view(), name='calendar'),
     path('new/', views.EventCreateView.as_view(), name='event_new'),
+    path('edit/<int:pk>/', views.EventUpdateView.as_view(), name='event_edit'),
     path('logout/', views.logout_user, name='logout'),
 ]

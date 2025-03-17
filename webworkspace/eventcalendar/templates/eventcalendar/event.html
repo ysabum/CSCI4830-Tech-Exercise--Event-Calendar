@@ -6,7 +6,7 @@ Event
 
 {% block content %}
 <div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'eventcalendar:calendar' %}"> Calendar </a>
+  <center><strong><h1 style="font-size: value;"> Create an Event </h1></strong></center>
 </div>
 
 {% if form.errors %}
@@ -26,9 +26,14 @@ Event
 
 <form method="post">
   {% csrf_token %}
-  <table class="form form-table">
-    {{ form }}
+    
+
+    {{ form.name.label_tag }} {{ form.name }}<br/>
+    {{ form.start_time.label_tag }} {{ form.start_time }}<br/>
+    {{ form.end_time.label_tag }} {{ form.end_time }}<br/>
+    {{ form.location.label_tag }} {{ form.location }}<br/>
+    {{ form.description.label_tag }} {{ form.description }}<br/>
+
     <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
-  </table>
 </form>
 {% endblock %}

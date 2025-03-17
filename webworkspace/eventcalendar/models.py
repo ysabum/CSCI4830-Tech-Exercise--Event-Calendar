@@ -10,11 +10,11 @@ class Event(models.Model):
     It includes fields for the event name, date, venue, and description.
     '''
 
-    user = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank = True, related_name='events') # ForeignKey to User model to link events to their respective users
-    name = models.CharField('Event Name', max_length=100)
-    start_time = models.DateTimeField('Start Time', help_text='Start time of the event.')
-    end_time = models.DateTimeField('End Time', help_text='End time of the event.')
-    location = models.CharField('Location', help_text='Location of the event.', max_length=100, blank=True)
+    user = models.ForeignKey(User, on_delete = models.CASCADE, null = True, blank = True, related_name = 'events') # ForeignKey to User model to link events to their respective users
+    name = models.CharField('Event Name', max_length = 100)
+    start_time = models.DateTimeField('Start Time', help_text = 'Start time of the event. Format: MM/DD/YYYY HH:MM:SS')
+    end_time = models.DateTimeField('End Time', help_text = 'End time of the event. Format: MM/DD/YYYY HH:MM:SS')
+    location = models.CharField('Location', help_text = 'Location of the event.', max_length = 100, blank = True)
     description = models.TextField('Description', blank=True)    
 
     class Meta():
