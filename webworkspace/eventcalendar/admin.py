@@ -1,9 +1,6 @@
 from django.contrib import admin
-from .models import Event, Venue, Calendar_User # Import the Event model from models.py of same directory
+from .models import Event, Venue # Import the Event model from models.py of same directory
 
-#admin.site.register(Venue) # Register the Venue model with the admin site
-admin.site.register(Calendar_User) # Register the Users model with the admin site
-#admin.site.register(Event) # Register the Event model with the admin site
 
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
@@ -24,7 +21,7 @@ class EventAdmin(admin.ModelAdmin):
     It includes a list display and search fields for the event name and date.
     '''
 
-    fields = (('name', 'venue',), 'event_date', 'description', 'attendees',) # Fields to display in the admin form
+    fields = ('name', 'venue', 'event_date', 'description',) # Fields to display in the admin form
     list_display = ('name', 'event_date', 'venue',)
     list_filter = ('event_date', 'venue',)
     ordering = ('event_date',) # Order the list by event date

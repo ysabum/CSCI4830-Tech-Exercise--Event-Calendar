@@ -27,6 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+LOGIN_URL = 'login' # URL to redirect to when user is not authenticated
+
 
 # Application definition
 
