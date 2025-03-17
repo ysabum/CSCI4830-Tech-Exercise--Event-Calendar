@@ -1,0 +1,27 @@
+{% extends 'eventcalendar/base.html' %}
+{% block content %}
+{% load static %}
+
+<center><h1>Create an Event</h1></center>
+
+<form method='POST'>
+    {% csrf_token %}
+
+    {{ form.name.label_tag }}&emsp;{{ form.name }}<br/>
+    {{ form.event_date.label_tag }}&emsp;{{ form.event_date }}<br/>
+    {{ form.venue.label_tag }}&emsp;{{ form.venue }}<br/>
+    {{ form.description.label_tag }}&emsp;{{ form.description }}<br/>
+
+    <input type='submit' value='Create Event'>
+    
+</form>
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -3,8 +3,7 @@ from . import views #Imports the views from the same directory
 
 urlpatterns = [
     path('login/', views.CustomLoginView.as_view(), name='login'),
-    path('', views.HomeView.as_view(), name='home'),
-    path('<int:year>/<str:month>/', views.HomeView.as_view(), name='home'),
-    path('events/', views.EventList.as_view(), name ='all_events'),
+    path('', views.CalendarView.as_view(), name='calendar'),
+    path('new/', views.EventCreateView.as_view(), name='event_new'),
     path('logout/', views.logout_user, name='logout'),
 ]
