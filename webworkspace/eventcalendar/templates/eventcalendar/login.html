@@ -1,4 +1,6 @@
 <!doctype html>
+
+<!--Bootstrap; Did not extend from base.html-->
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -10,16 +12,21 @@
 
     <title>Login</title>
   </head>
-  <body>
-    {% load static %} <!-- Load the static files -->
-    <br/>
-    <div class="container">
 
-        <!-- Custom Blue Background Behind Title -->
-        <div class="text-white text-center rounded-0" style="background-color: #17a2b8; height: 150px; display: flex; align-items: center; justify-content: center;">
-            <h1 class="mb-0" style="font-size: 75px;">LOGIN</h1>
-        </div>
-        <br/>
+<!--Card Format-->
+  <body>
+  {% load static %} <!-- Load the static files -->
+    <br/>
+    <div class="row justify-content-center">
+        <div class="col-md-10">  <!-- Increase md to increase card width. -->
+          <div class="card mb-4 shadow-lg rounded">
+            
+            <!-- Gradient header with blue-to-white ombre -->
+            <div class="text-white text-center rounded-top" 
+              style="background: linear-gradient(to right, #17a2b8,rgb(186, 236, 244)); height: 150px; display: flex; align-items: center; justify-content: center;">
+              <h1 class="mb-0" style="font-size: 50px;">Login</h1>
+            </div>
+            <br/>
 
         <!-- Display error message in red if present -->
         {% if form.non_field_errors %}
@@ -50,13 +57,14 @@
                 <label class="form-check-label" for="id_remember">Remember me</label>
             </div>
 
-            <!-- Buttons container (Login & Register) -->
+            <!-- Buttons container (Login and Register) -->
             <div class="d-flex justify-content-center mt-3">
                 <input type="submit" value="Login" class="btn text-white me-3"
                     style="background-color: #17a2b8; border-color: #17a2b8;">
-                <a href="{% url 'register' %}" class="btn btn-link" style="color: #17a2b8";>Register</a>
+                <a href="{% url 'register' %}" class="btn btn-link" style="color:rgb(255, 0, 0)";>Register</a>
             </div>
+
         </form>
-    </div>
+    </div></div></div>
   </body>
 </html>

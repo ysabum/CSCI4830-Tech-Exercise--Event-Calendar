@@ -1,16 +1,18 @@
 {% extends 'eventcalendar/base.html' %}
 {% load widget_tweaks %}
-
-{% block title %}
-Event
-{% endblock %}
-
 {% block content %}
-<div class="text-white text-center rounded-0" style="background-color: #17a2b8; height: 75px; display: flex; align-items: center; justify-content: center;">
-  <h1 class="mb-0" style="font-size: 25px;">Create an Event</h1>
-</div>
+
+<!--Card Format-->
+<div class="row justify-content-center">
+  <div class="col-md-10">  <!-- Increase md to increase card width. -->
+  <div class="card mb-4 shadow-lg rounded">
+    <div class="text-white text-center rounded-top" style="background: linear-gradient(to right, #17a2b8,rgb(186, 236, 244)); height: 75px; display: flex; align-items: center; justify-content: center;">
+      <h1 class="mb-0" style="font-size: 25px;">Add an Event</h1>
+    </div>
+
 <br/>
 
+<!--Error Checking-->
 {% if form.errors %}
     {% for field in form %}
         {% for error in field.errors %}
@@ -26,6 +28,7 @@ Event
     {% endfor %}
 {% endif %}
 
+<!--Add Event Form-->
 <form method="post">
   {% csrf_token %}
 
@@ -60,4 +63,6 @@ Event
     <center><button type="submit" class="btn" style="background-color: #17a2b8; color: white;">Submit</button></center>
   </div>
 </form>
+</div></div></div>
+
 {% endblock %}

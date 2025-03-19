@@ -15,18 +15,18 @@ class Event(models.Model):
     start_time = models.DateTimeField('Start Time', help_text = 'Start time of the event. Format: MM/DD/YYYY HH:MM:SS')
     end_time = models.DateTimeField('End Time', help_text = 'End time of the event. Format: MM/DD/YYYY HH:MM:SS')
     location = models.CharField('Location', help_text = 'Location of the event.', max_length = 100, blank = True)
-    description = models.TextField('Description', blank=True)
+    description = models.TextField('Description', blank = True)
 
     class Meta():
         verbose_name = 'Event Scheduling'
         verbose_name_plural = 'Event Scheduling'
 
-    @property
+    @property # Allows user to edit or delete event from main calendar.
     def get_html_url(self):
         edit_url = reverse('event_edit', args = (self.id,))
 
         return (
-            f'<a href="{edit_url}">{self.name}</a> '
+            f'<a href="{edit_url}">{self.name}</a>'
         )
 
     def __str__(self):

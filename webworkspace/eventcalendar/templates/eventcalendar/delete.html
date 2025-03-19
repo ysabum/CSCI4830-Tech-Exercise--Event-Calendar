@@ -1,10 +1,16 @@
 {% extends 'eventcalendar/base.html' %}
 {% load static %}
-
 {% block content %}
 
-  <div class="card mb-3">
-    <img src="{% static 'eventcalendar/event_images/default.jpg' %}" class="card-img-top" alt="Default Event Image" style="height: 100px; object-fit: cover;">
+<!--Card Format-->
+<div class="row justify-content-center">
+  <div class="col-md-10">  <!-- Increase md to increase card width. -->
+    <div class="card mb-4 shadow-lg rounded">
+      
+    <!-- Gradient header with blue-to-white ombre -->
+      <div class="text-white text-center rounded-top" 
+        style="background: linear-gradient(to right, #17a2b8,rgb(186, 236, 244)); height: 150px; display: flex; align-items: center; justify-content: center;">
+      </div>
 
     <div class="card-body">
       <h5 class="card-title">{{ event.name }}</h5>
@@ -29,5 +35,6 @@
       <!-- Cancel button to go back to calendar -->
       <a href="{% url 'calendar' %}" class="btn btn-secondary">Cancel</a>
   </div>
+</div></div>
 
 {% endblock %}

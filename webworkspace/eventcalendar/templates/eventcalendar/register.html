@@ -1,4 +1,6 @@
 <!doctype html>
+
+<!--Bootstrap; Did not extend from base.html-->
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -10,14 +12,21 @@
 
     <title>Register</title>
   </head>
+
+<!--Card Format-->
   <body>
     {% load static %}
     <br/>
-    <div class="container">
-        <div class="text-white text-center rounded-0" style="background-color: #17a2b8; height: 150px; display: flex; align-items: center; justify-content: center;">
-            <h1 class="mb-0" style="font-size: 75px;">REGISTER</h1>
-        </div>
-        <br/>
+    <div class="row justify-content-center">
+        <div class="col-md-10">  <!-- Increase md to increase card width. -->
+          <div class="card mb-4 shadow-lg rounded">
+            
+            <!-- Gradient header with blue-to-white ombre -->
+            <div class="text-white text-center rounded-top" 
+              style="background: linear-gradient(to right, #17a2b8,rgb(186, 236, 244)); height: 150px; display: flex; align-items: center; justify-content: center;">
+              <h1 class="mb-0" style="font-size: 50px;">Registration</h1>
+            </div>
+            <br/>
 
             <!-- Display errors if present -->
             {% if form.errors %}
@@ -50,6 +59,7 @@
                     <li class="card-text"><small class="text-muted">Your password must contain at least 8 characters. </small></li>
                     <li class="card-text"><small class="text-muted">Your password cannot be a commonly used password. </small></li>
                     <li class="card-text"><small class="text-muted">Your password cannot be entirely numeric. </small></li>
+                    <br/>
                     <input type="password" class="form-control" id="id_password1" name="password1" required>
                 </div>
 
@@ -63,7 +73,7 @@
                 <!-- Buttons container -->
                 <div class="d-flex justify-content-center mt-3">
                     <input type="submit" value="Register" class="btn btn-primary me-3" style="background-color: #17a2b8; border-color: #17a2b8;">
-                    <a href="{% url 'login' %}" class="btn btn-link" style="color: #17a2b8";>Back to Login</a>
+                    <a href="{% url 'login' %}" class="btn btn-link" style="color:rgb(255, 0, 0)";>Back to Login</a>
                 </div>
             </form>
     </div>

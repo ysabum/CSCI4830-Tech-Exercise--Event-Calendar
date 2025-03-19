@@ -4,54 +4,65 @@
   margin: 10px;
 }
 
+/* Calendar container with shadow */
 .calendar {
   width: 99%;
   height: 50%;
   margin: auto;
   font-size: 13px;
   border-collapse: collapse; /* Ensures borders don't overlap */
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3); /* Adds shadow effect */
+  border-radius: 10px; /* Slightly rounded corners */
+  overflow: hidden; /* Prevents border radius from clipping */
 }
 
-.calendar tr, .calendar td {
-  border: 2px solid #8C8C8C;  /* Set border color to white */
+/* Month-Year Title */
+.month {
+  font-size: 25px;
+  color: white; /* White text for month title */
+  background: #17a2b8;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 10px 10px 0 0; /* Rounded corners on top */
 }
 
+/* Day headers (Sun, Mon, etc.) */
 .calendar th {
   padding: 10px;
   text-align: center;
   font-size: 18px;
   color: white; /* White text for column headers */
-  background-color: #17a2b8; /* Blue background for headers */
-}
+  background:  #17a2b8 }
 
+/* Individual calendar cells */
 .calendar td {
   width: 200px;
   height: 85px;
   padding: 20px 0px 0px 5px;
-  background-color: #ffffff; /* Blue background for calendar cells */
-  color: white; /* White text inside the calendar cells */
-  text-align: left; /* Center-align text in cells */
+  background-color: #ffffff; /* White background for calendar cells */
+  color: black; /* Black text inside the calendar cells */
+  text-align: left;
+  border: 2px solid #8C8C8C;  /* Border color */
 }
 
-/* Set white for text content in cells */
-.calendar .date, .calendar .event {
-  color: rgb(0, 0, 0); /* White text for dates and events */
+/* Date numbers inside the calendar */
+.calendar .date {
+  font-size: 16px;
+  color: black; /* Black text for individual dates */
+  font-weight: bold;
 }
 
+/* Events inside the calendar */
+.calendar .event {
+  color: red; /* Red text for events */
+}
+
+/* Body styling */
 body {
   font-family: "ptsans", "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  background-color: #ffffff; /* Dark background for the body */
-  color: rgb(0, 0, 0); /* White text globally */
-}
-
-.month {
-  font-size: 25px;
-  color: white; /* White text for month title */
-}
-
-.date {
-  font-size: 16px;
-  color: white; /* White text for individual dates */
+  background-color: #ffffff; /* White background */
+  color: black; /* Global text color */
 }
 
 ul {
@@ -60,5 +71,20 @@ ul {
 }
 
 a {
-  color: #17a2b8;
+  color: #ff0000;
+}
+
+/* Changes the buttons */
+.btn-custom {
+  background-color: #17a2b8;
+  color: white;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3); /* Adds shadow */
+  position: relative;
+  top: 2px; /* Moves the button downward */
+}
+
+/* Wrapper around calendar */
+.calendar-wrapper {
+  position: relative;
+  z-index: 1; /* Ensures calendar is above buttons */
 }

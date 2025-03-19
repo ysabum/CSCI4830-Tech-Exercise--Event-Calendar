@@ -1,26 +1,49 @@
 {% extends 'eventcalendar/base.html' %}
 {% load static %}
-
 {% block content %}
 
-{% for event in events %}
-<div class="card mb-3">
-    <img src="{% static 'eventcalendar/event_images/default.jpg' %}" class="card-img-top" alt="Default Event Image" style="height: 100px; object-fit: cover;">
-
+<!--Search Results-->
+<div class="container">
+  
+  {% if query %}
+  <div class="card mb-3">
     <div class="card-body">
-      <h5 class="card-title">{{ event.name }}</h5>
-      <p class="card-text">
-        <strong>Start Time:</strong> {{ event.start_time }}<br>
-        <strong>End Time:</strong> {{ event.end_time }}<br>
-        <strong>Location:</strong> {{ event.location }}<br>
-        <strong>Description:</strong> {{ event.description }}<br>
-      </p>
-
-
-
+      <h5>Search results for "{{ query }}":</h5>
+      {% if not events %}
+        <p>No events found.</p>
+      {% endif %}
     </div>
   </div>
-  <br/>
-{% endfor %}
+  {% endif %}
+
+<!--List Events-->
+  <div class="row justify-content-center">
+    {% for event in events %}
+    <div class="col-md-15">  <!-- Increase md to increase card width. -->
+      <div class="card mb-4 shadow-lg rounded">
+        
+        <!-- Gradient header with blue-to-white ombre -->
+        <div class="text-white text-center rounded-top" 
+          style="background: linear-gradient(to right, #17a2b8,rgb(186, 236, 244)); height: 150px; display: flex; align-items: center; justify-content: center;">
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">
+            <a href="{% url 'event_edit' event.id %}" style="text-decoration: none; color:rgb(255, 0, 0);">
+                {{ event.name }}
+            </a>
+          </h5>
+          <p class="card-text">
+            <strong>Start Time:</strong> {{ event.start_time }}<br>
+            <strong>End Time:</strong> {{ event.end_time }}<br>
+            <strong>Location:</strong> {{ event.location }}<br>
+            <strong>Description:</strong> {{ event.description }}<br>
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 {% endblock %}

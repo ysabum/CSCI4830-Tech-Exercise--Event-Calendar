@@ -45,6 +45,7 @@ class RegisterView(FormView):
     Class-based view to handle user registration.
     Uses Django's built-in CreateView.
     '''
+
     template_name = 'eventcalendar/register.html'
     form_class = UserCreationForm
     redirect_authenticated_user = True
@@ -54,7 +55,8 @@ class RegisterView(FormView):
         user = form.save()
         if user is not None:
             login(self.request, user)
-        return super(RegisterPage, self).form_valid()
+
+        return redirect('login')
 
 
 def logout_user(request):
@@ -98,7 +100,7 @@ class CalendarView(LoginRequiredMixin, ListView):
         Function to get the previous month.
         '''
 
-        first_day = cal_day.replace(day=1)
+        first_day = cal_day.replace(day = 1)
         previous_month = first_day - timedelta(days = 1)
 
         return f'month={previous_month.year}-{previous_month.month}'
@@ -150,10 +152,27 @@ class EventListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         '''
         Function to get the queryset.
-        Returns only the events for the logged-in user.
+        Returns only the events for the logged-in user, optionally filtered by search query.
         '''
 
-        return Event.objects.filter(user=self.request.user)
+        query = self.request.GET.get('q', '')  # Get search query from URL
+        queryset = Event.objects.filter(user = self.request.user)
+
+        if query:
+            queryset = queryset.filter(name__icontains = query)  # Case-insensitive search
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        '''
+        Function to pass additional context to the template.
+        Includes the search query in the context for display in the template.
+        '''
+        
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')  # Pass query to the template
+
+        return context
 
 
 class EventCreateView(LoginRequiredMixin, CreateView):
