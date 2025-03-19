@@ -1,11 +1,17 @@
+{% load static %}
 {% extends 'eventcalendar/base.html' %}
 {% block content %}
 
-<!--Previous/Next Month Buttons on Calendar-->
+<head>
+    <!-- Link to static calendar.css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'eventcalendar/css/calendar.css' %}">
+</head>
+
+<!-- Previous/Next Month Buttons on Calendar -->
 &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-info rounded-0 btn-custom" href="{% url 'calendar' %}?{{ previous_month }}">Previous Month</a>
 <a class="btn btn-info-right rounded-0 btn-custom" href="{% url 'calendar' %}?{{ next_month }}">Next Month</a>
 
-<!--Actual Calendar-->
+<!-- Actual Calendar -->
 <div class="calendar-wrapper">
     {{ calendar }}
 </div>

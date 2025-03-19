@@ -24,15 +24,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-cv(970&az=-q693xg6vwu_^mw97i07v!#4=*0uy0vc!azv#f@$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['18.119.123.221', '172.31.13.186',]
 
 LOGIN_URL = 'login' # URL to redirect to when user is not authenticated
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,7 +57,7 @@ ROOT_URLCONF = 'djangoproject.urls'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT = '/home/ubuntu/webworkspace/static/'
 
 TEMPLATES = [
     {
