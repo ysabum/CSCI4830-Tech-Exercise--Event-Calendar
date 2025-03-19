@@ -7,7 +7,7 @@ class Calendar(HTMLCalendar):
     Class to generate a calendar for the specified month and year.
     '''
 
-    def __init__(self, year=None, month=None):
+    def __init__(self, year = None, month = None):
         self.year = year
         self.month = month
         super(Calendar, self).__init__(firstweekday = 6) # Set the first day of the week to Sunday
@@ -22,7 +22,7 @@ class Calendar(HTMLCalendar):
         cal_day = ''
 
         for event in events_per_day:
-            cal_day += f'<li> {event.name} </li>'
+            cal_day += f'<li> {event.get_html_url} </li>'
 
         if day != 0:
             return f'<td><span class="date">{day}</span><ul> {cal_day} </ul></td>'

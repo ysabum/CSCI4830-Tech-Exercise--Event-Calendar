@@ -9,4 +9,4 @@ class EventForm(ModelForm):
     
     class Meta:
         model = Event
-        fields = ['name', 'start_time', 'end_time', 'location', 'description']
+        fields = ['name', 'start_time', 'end_time', 'location', 'description',]

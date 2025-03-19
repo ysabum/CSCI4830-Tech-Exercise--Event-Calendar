@@ -1,13 +1,15 @@
 {% extends 'eventcalendar/base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}
 Event
 {% endblock %}
 
 {% block content %}
-<div class="clearfix">
-  <center><strong><h1 style="font-size: value;"> Create an Event </h1></strong></center>
+<div class="text-white text-center rounded-0" style="background-color: #17a2b8; height: 75px; display: flex; align-items: center; justify-content: center;">
+  <h1 class="mb-0" style="font-size: 25px;">Create an Event</h1>
 </div>
+<br/>
 
 {% if form.errors %}
     {% for field in form %}
@@ -19,21 +21,43 @@ Event
     {% endfor %}
     {% for error in form.non_field_errors %}
         <div class="alert alert-danger">
-            {{ field.label }} <strong>{{ error|escape }}</strong>
+            <strong>{{ error|escape }}</strong>
         </div>
     {% endfor %}
 {% endif %}
 
 <form method="post">
   {% csrf_token %}
-    
 
-    {{ form.name.label_tag }} {{ form.name }}<br/>
-    {{ form.start_time.label_tag }} {{ form.start_time }}<br/>
-    {{ form.end_time.label_tag }} {{ form.end_time }}<br/>
-    {{ form.location.label_tag }} {{ form.location }}<br/>
-    {{ form.description.label_tag }} {{ form.description }}<br/>
+  <div class="mb-3">
+    <strong><label for="id_name" class="form-label">&emsp;{{ form.name.label }}<span style="color: red;">*</span></label></strong>
+    {{ form.name|add_class:"form-control" }}
+  </div>
 
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+  <div class="mb-3">
+    <strong><label for="id_start_time" class="form-label">&emsp;{{ form.start_time.label }}<span style="color: red;">*</span></label></strong>
+    <p class="card-text"><small class="text-muted">&emsp;Format: MM/DD/YYYY HH:MM:SS</small></p>
+    {{ form.start_time|add_class:"form-control" }}
+  </div>
+
+  <div class="mb-3">
+    <strong><label for="id_end_time" class="form-label">&emsp;{{ form.end_time.label }}<span style="color: red;">*</span></label></strong>
+    <p class="card-text"><small class="text-muted">&emsp;Format: MM/DD/YYYY HH:MM:SS</small></p>
+    {{ form.end_time|add_class:"form-control" }}
+  </div>
+
+  <div class="mb-3">
+    <strong><label for="id_location" class="form-label">&emsp;{{ form.location.label }}</label></strong>
+    {{ form.location|add_class:"form-control" }}
+  </div>
+
+  <div class="mb-3">
+    <strong><label for="id_description" class="form-label">&emsp;{{ form.description.label }}</label></strong>
+    {{ form.description|add_class:"form-control" }}
+  </div>
+
+  <div class="mb-3">
+    <center><button type="submit" class="btn" style="background-color: #17a2b8; color: white;">Submit</button></center>
+  </div>
 </form>
 {% endblock %}

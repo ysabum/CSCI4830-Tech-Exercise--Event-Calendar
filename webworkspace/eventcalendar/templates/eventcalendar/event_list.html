@@ -1,0 +1,26 @@
+{% extends 'eventcalendar/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% for event in events %}
+<div class="card mb-3">
+    <img src="{% static 'eventcalendar/event_images/default.jpg' %}" class="card-img-top" alt="Default Event Image" style="height: 100px; object-fit: cover;">
+
+    <div class="card-body">
+      <h5 class="card-title">{{ event.name }}</h5>
+      <p class="card-text">
+        <strong>Start Time:</strong> {{ event.start_time }}<br>
+        <strong>End Time:</strong> {{ event.end_time }}<br>
+        <strong>Location:</strong> {{ event.location }}<br>
+        <strong>Description:</strong> {{ event.description }}<br>
+      </p>
+
+
+
+    </div>
+  </div>
+  <br/>
+{% endfor %}
+
+{% endblock %}

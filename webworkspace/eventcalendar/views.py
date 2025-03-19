@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import reverse_lazy 
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from datetime import datetime, timedelta, date
 import calendar
@@ -12,11 +12,12 @@ from .utils import Calendar
 from django.views import generic
 from django.views.generic import TemplateView
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 
 from django.contrib.auth.views import LoginView
-from django.contrib.auth import logout
+from django.contrib.auth import logout, login
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
 from django.utils.safestring import mark_safe
 
 
@@ -37,6 +38,23 @@ class CustomLoginView(LoginView):
         '''
 
         return reverse_lazy('calendar') # Redirect to home page after successful login
+
+
+class RegisterView(FormView):
+    '''
+    Class-based view to handle user registration.
+    Uses Django's built-in CreateView.
+    '''
+    template_name = 'eventcalendar/register.html'
+    form_class = UserCreationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy('calendar')
+
+    def form_valid(self, form):
+        user = form.save()
+        if user is not None:
+            login(self.request, user)
+        return super(RegisterPage, self).form_valid()
 
 
 def logout_user(request):
@@ -120,10 +138,27 @@ class CalendarView(LoginRequiredMixin, ListView):
         return context
 
 
+class EventListView(LoginRequiredMixin, ListView):
+    '''
+    Class-based view to list all events for the logged-in user.
+    '''
+
+    model = Event
+    template_name = 'eventcalendar/event_list.html'
+    context_object_name = 'events'
+
+    def get_queryset(self):
+        '''
+        Function to get the queryset.
+        Returns only the events for the logged-in user.
+        '''
+
+        return Event.objects.filter(user=self.request.user)
+
+
 class EventCreateView(LoginRequiredMixin, CreateView):
     '''
     Class-based view to create a new event.
-    Requires user to be authenticated.
     '''
 
     model = Event
@@ -140,21 +175,37 @@ class EventCreateView(LoginRequiredMixin, CreateView):
 class EventUpdateView(LoginRequiredMixin, UpdateView):
     '''
     Class-based view to update an existing event.
-    Requires user to be authenticated.
     '''
 
     model = Event
     form_class = EventForm
-    template_name = 'eventcalendar/event.html'
+    template_name = 'eventcalendar/event_edit.html'
     success_url = reverse_lazy('calendar')
 
 
 class EventDeleteView(LoginRequiredMixin, DeleteView):
     '''
-    Class-based view to delete an existing event.
-    Requires user to be authenticated.
+    Class-based view to delete an event.
+    Ensures only the event owner can delete it.
     '''
-
     model = Event
-    template_name = 'eventcalendar/delete.html'
+    template_name = 'eventcalendar/delete.html'  # Confirmation template
     success_url = reverse_lazy('calendar')
+
+    def get_queryset(self):
+        return Event.objects.filter(user = self.request.user)
+
+    # Handle the confirmation page
+    def get(self, request, *args, **kwargs):
+        context = {
+            'event': self.get_object()
+        }
+
+        return self.render_to_response(context)
+
+    # Handle the deletion when the user confirms
+    def post(self, request, *args, **kwargs):
+        event = self.get_object()
+        event.delete()
+
+        return HttpResponseRedirect(self.success_url)
