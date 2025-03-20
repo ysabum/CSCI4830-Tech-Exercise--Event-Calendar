@@ -43,7 +43,6 @@ class CustomLoginView(LoginView):
 class RegisterView(FormView):
     '''
     Class-based view to handle user registration.
-    Uses Django's built-in CreateView.
     '''
 
     template_name = 'eventcalendar/register.html'
