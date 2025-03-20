@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-cv(970&az=-q693xg6vwu_^mw97i07v!#4=*0uy0vc!azv#f@$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['18.119.123.221', '172.31.13.186',]
+ALLOWED_HOSTS = ['18.119.123.221',]
 
 LOGIN_URL = 'login' # URL to redirect to when user is not authenticated
 
