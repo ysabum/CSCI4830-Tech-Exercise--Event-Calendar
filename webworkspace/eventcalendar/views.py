@@ -206,6 +206,7 @@ class EventDeleteView(LoginRequiredMixin, DeleteView):
     Class-based view to delete an event.
     Ensures only the event owner can delete it.
     '''
+    
     model = Event
     template_name = 'eventcalendar/delete.html'  # Confirmation template
     success_url = reverse_lazy('calendar')
